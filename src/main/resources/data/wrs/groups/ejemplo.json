@@ -1,0 +1,25 @@
+{
+  "ids": ["minecraft:zombie", "minecraft:diamond_sword", "minecraft:iron_sword"],
+  "damage": {
+    "slash": 10.0,
+    "bludgeon": 8.0,
+    "pierce": 5.0,
+    "arcane": 5.0,
+    "fire": 7.0,
+    "ice": 6.0,
+    "electric": 9.0,
+    "holy": 4.0,
+    "dark": 3.0
+  },
+  "resistance": {
+    "slash": 2.0,
+    "bludgeon": 3.5,
+    "pierce": 6.0,
+    "arcane": 1.0,
+    "fire": 0.5,
+    "ice": 2.5,
+    "electric": 1.5,
+    "holy": 4.0,
+    "dark": 2.0
+  }
+}
