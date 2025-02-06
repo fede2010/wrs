@@ -1,4 +1,4 @@
-package dev.fede2010.wrs.jade;
+package dev.fede2010.wrs.compatibilidad.jade;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.fede2010.wrs.Wrs;

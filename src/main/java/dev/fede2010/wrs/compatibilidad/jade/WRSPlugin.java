@@ -1,4 +1,4 @@
-package dev.fede2010.wrs.jade;
+package dev.fede2010.wrs.compatibilidad.jade;
 
 
 import dev.fede2010.wrs.Wrs;
@@ -11,7 +11,7 @@ import snownee.jade.api.WailaPlugin;
 @WailaPlugin
 public class WRSPlugin implements IWailaPlugin {
 
-    public static final String ATRIBUTOS = Wrs.MODID + ":atributos";
+    public static final String ATRIBUTOS = Wrs.MODID + ":attributes";
     @Override
     public void register(IWailaCommonRegistration registration) {
         //TODO register data providers

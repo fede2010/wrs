@@ -63,7 +63,7 @@ public class Atributos {
 
     }
 
-    public static boolean atributosMinimos(LivingEntity entity) {
+    public static double atributosTotales(LivingEntity entity) {
         Attribute[] damageAttributes = new Attribute[]{
                 Atributos.SLASH.get(),
                 Atributos.BLUDGEON.get(),
@@ -81,7 +81,7 @@ public class Atributos {
             atributosTotales += entity.getAttributeValue(attr);
         }
 
-        return atributosTotales >= 100;
+        return atributosTotales;
     }
 
 

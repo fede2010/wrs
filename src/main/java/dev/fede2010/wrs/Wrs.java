@@ -2,7 +2,8 @@ package dev.fede2010.wrs;
 
 import com.mojang.logging.LogUtils;
 import dev.fede2010.wrs.atributos.Atributos;
-import dev.fede2010.wrs.jade.Tecla;
+import dev.fede2010.wrs.data.AtributosLoaderEvent;
+import dev.fede2010.wrs.compatibilidad.jade.Tecla;
 import dev.fede2010.wrs.network.DataSyncPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,6 +48,7 @@ public class Wrs {
         MinecraftForge.EVENT_BUS.register(this);
 
         Atributos.register(modEventBus);
+        MinecraftForge.EVENT_BUS.register(AtributosLoaderEvent.class);
 
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us

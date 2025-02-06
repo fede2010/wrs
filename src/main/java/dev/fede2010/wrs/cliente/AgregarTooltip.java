@@ -50,38 +50,38 @@ public class AgregarTooltip {
             resultado = AtributosDataType.reemplazarValores(dataGrupo, dataItem);
         }
 
-        agregarAtributo(event, resultado.damage().getSlash(), Atributos.SLASH.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getBludgeon(), Atributos.BLUDGEON.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getPierce(), Atributos.PIERCE.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getArcane(), Atributos.ARCANE.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getFire(), Atributos.FIRE.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getIce(), Atributos.ICE.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getElectric(), Atributos.ELECTRIC.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getHoly(), Atributos.HOLY.get().getDescriptionId());
-        agregarAtributo(event, resultado.damage().getDark(), Atributos.DARK.get().getDescriptionId());
+        agregarAtributo(event, Atributos.SLASH.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getSlash());
+        agregarAtributo(event, Atributos.BLUDGEON.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getBludgeon());
+        agregarAtributo(event, Atributos.PIERCE.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getPierce());
+        agregarAtributo(event, Atributos.ARCANE.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getArcane());
+        agregarAtributo(event, Atributos.FIRE.get().getDescriptionId(), ChatFormatting.RED, resultado.damage().getFire());
+        agregarAtributo(event, Atributos.ICE.get().getDescriptionId(), ChatFormatting.AQUA, resultado.damage().getIce());
+        agregarAtributo(event, Atributos.ELECTRIC.get().getDescriptionId(), ChatFormatting.YELLOW, resultado.damage().getElectric());
+        agregarAtributo(event, Atributos.HOLY.get().getDescriptionId(), ChatFormatting.WHITE, resultado.damage().getHoly());
+        agregarAtributo(event, Atributos.DARK.get().getDescriptionId(), ChatFormatting.DARK_GRAY, resultado.damage().getDark());
 
-        agregarAtributo(event, resultado.resistance().getSlash(), Atributos.SLASH_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getBludgeon(), Atributos.BLUDGEON_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getPierce(), Atributos.PIERCE_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getArcane(), Atributos.ARCANE_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getFire(), Atributos.FIRE_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getIce(), Atributos.ICE_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getElectric(), Atributos.ELECTRIC_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getHoly(), Atributos.HOLY_RESIST.get().getDescriptionId());
-        agregarAtributo(event, resultado.resistance().getDark(), Atributos.DARK_RESIST.get().getDescriptionId());
+        agregarAtributo(event, Atributos.SLASH_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getSlash());
+        agregarAtributo(event, Atributos.BLUDGEON_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getBludgeon());
+        agregarAtributo(event, Atributos.PIERCE_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getPierce());
+        agregarAtributo(event, Atributos.ARCANE_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getArcane());
+        agregarAtributo(event, Atributos.FIRE_RESIST.get().getDescriptionId(), ChatFormatting.RED, resultado.damage().getFire());
+        agregarAtributo(event, Atributos.ICE_RESIST.get().getDescriptionId(), ChatFormatting.AQUA, resultado.damage().getIce());
+        agregarAtributo(event, Atributos.ELECTRIC_RESIST.get().getDescriptionId(), ChatFormatting.YELLOW, resultado.damage().getElectric());
+        agregarAtributo(event, Atributos.HOLY_RESIST.get().getDescriptionId(), ChatFormatting.WHITE, resultado.damage().getHoly());
+        agregarAtributo(event, Atributos.DARK_RESIST.get().getDescriptionId(), ChatFormatting.DARK_GRAY, resultado.damage().getDark());
 
     }
 
     // Función genérica para agregar atributos al tooltip
-    private static void agregarAtributo(ItemTooltipEvent event, double valorAtributo, String descriptionId) {
+    private static void agregarAtributo(ItemTooltipEvent event, String atributoId, ChatFormatting color, double valorAtributo) {
         if (valorAtributo != 0) {
-            String attributeName = I18n.get(descriptionId);
-            ChatFormatting color = (valorAtributo > 0) ? ChatFormatting.GREEN : ChatFormatting.RED;
+            String attributeName = I18n.get(atributoId);
+            ChatFormatting colorValor = (valorAtributo > 0) ? ChatFormatting.BLUE : ChatFormatting.RED;
 
             // Remover cualquier línea que contenga el atributo antes de agregarlo
-            event.getToolTip().removeIf(component -> component.getString().startsWith(attributeName + ":"));
+            event.getToolTip().removeIf(component -> component.getString().contains(attributeName));
 
-            event.getToolTip().add(Component.literal(attributeName + ": " + valorAtributo).withStyle(color));
+            event.getToolTip().add(Component.literal(attributeName + ": ").withStyle(color).append(Component.literal("" + valorAtributo).withStyle(colorValor)));
         }
     }
 

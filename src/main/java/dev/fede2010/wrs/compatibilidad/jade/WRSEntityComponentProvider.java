@@ -1,4 +1,4 @@
-package dev.fede2010.wrs.jade;
+package dev.fede2010.wrs.compatibilidad.jade;
 
 import dev.fede2010.wrs.Config;
 import dev.fede2010.wrs.Wrs;
@@ -40,41 +40,41 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
         //Si la tecla no esta presionada muestra los daños de la entidad, si esta presionada muestra las resistencias de la entidad
         if(!Tecla.isVerMasPresionado()){
 
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.slash", "Slash", new ItemStack(Items.DIAMOND_SWORD));
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.bludgeon", "Bludgeon", new ItemStack(Items.DIAMOND_AXE));
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.pierce", "Pierce", new ItemStack(Items.ARROW));
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.arcane", "Arcane", new ItemStack(Items.ENCHANTED_BOOK));
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.fire", "Fire", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:healing");
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.ice", "Ice", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_swiftness");
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.electric", "Electric", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_fire_resistance");
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.holy", "Holy", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:invisibility");
-            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".jade.dark", "Dark", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_weakness");
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.slash", "Slash", new ItemStack(Items.DIAMOND_SWORD));
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.bludgeon", "Bludgeon", new ItemStack(Items.DIAMOND_AXE));
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.pierce", "Pierce", new ItemStack(Items.ARROW));
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.arcane", "Arcane", new ItemStack(Items.ENCHANTED_BOOK));
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.fire", "Fire", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:healing");
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.ice", "Ice", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_swiftness");
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.electric", "Electric", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_fire_resistance");
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.holy", "Holy", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:invisibility");
+            addTooltipAtributoAtaque(iTooltip, entityAccessor, Wrs.MODID + ".value.dark", "Dark", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_weakness");
 
             contador = 0;
 
         }else {
 
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.slash_resist", "Slash Resist", new ItemStack(Items.DIAMOND_SWORD));
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.bludgeon_resist", "Bludgeon Resist", new ItemStack(Items.DIAMOND_AXE));
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.pierce_resist", "Pierce Resist", new ItemStack(Items.ARROW));
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.arcane_resist", "Arcane Resist", new ItemStack(Items.ENCHANTED_BOOK));
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.fire_resist", "Fire Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:healing");
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.ice_resist", "Ice Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_swiftness");
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.electric_resist", "Electric Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_fire_resistance");
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.holy_resist", "Holy Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:invisibility");
-            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".jade.dark_resist", "Dark Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_weakness");
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.slash_resist", "Slash Resist", new ItemStack(Items.DIAMOND_SWORD));
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.bludgeon_resist", "Bludgeon Resist", new ItemStack(Items.DIAMOND_AXE));
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.pierce_resist", "Pierce Resist", new ItemStack(Items.ARROW));
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.arcane_resist", "Arcane Resist", new ItemStack(Items.ENCHANTED_BOOK));
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.fire_resist", "Fire Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:healing");
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.ice_resist", "Ice Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_swiftness");
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.electric_resist", "Electric Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_fire_resistance");
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.holy_resist", "Holy Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:invisibility");
+            addTooltipAtributoResistencia(iTooltip, entityAccessor, Wrs.MODID + ".value.dark_resist", "Dark Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_weakness");
 
             contador = 0;
 
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.slash_resist", "Slash Resist", new ItemStack(Items.DIAMOND_SWORD));
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.bludgeon_resist", "Bludgeon Resist", new ItemStack(Items.DIAMOND_AXE));
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.pierce_resist", "Pierce Resist", new ItemStack(Items.ARROW));
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.arcane_resist", "Arcane Resist", new ItemStack(Items.ENCHANTED_BOOK));
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.fire_resist", "Fire Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:healing");
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.ice_resist", "Ice Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_swiftness");
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.electric_resist", "Electric Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_fire_resistance");
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.holy_resist", "Holy Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:invisibility");
-            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".jade.dark_resist", "Dark Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_weakness");
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.slash_resist", "Slash Resist", new ItemStack(Items.DIAMOND_SWORD));
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.bludgeon_resist", "Bludgeon Resist", new ItemStack(Items.DIAMOND_AXE));
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.pierce_resist", "Pierce Resist", new ItemStack(Items.ARROW));
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.arcane_resist", "Arcane Resist", new ItemStack(Items.ENCHANTED_BOOK));
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.fire_resist", "Fire Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:healing");
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.ice_resist", "Ice Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_swiftness");
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.electric_resist", "Electric Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_fire_resistance");
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.holy_resist", "Holy Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:invisibility");
+            addTooltipAtributoDebilidad(iTooltip, entityAccessor, Wrs.MODID + ".value.dark_resist", "Dark Resist", new ItemStack(Items.LINGERING_POTION), "Potion", "minecraft:long_weakness");
 
             contador = 0;
 

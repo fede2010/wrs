@@ -14,12 +14,19 @@ public class Config {
             .comment("default: false")
             .define("detalles", false);
 
+    private static final ForgeConfigSpec.BooleanValue DEBUG = BUILDER
+            .comment("Muestra el daño final realizado")
+            .comment("default: false")
+            .define("debug", false);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean detalles;
+    public static boolean debug;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         detalles = DETALLES.get();
+        debug = DEBUG.get();
     }
 }
