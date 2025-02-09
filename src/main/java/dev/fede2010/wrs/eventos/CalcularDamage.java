@@ -3,12 +3,13 @@ package dev.fede2010.wrs.eventos;
 import dev.fede2010.wrs.Config;
 import dev.fede2010.wrs.Wrs;
 import dev.fede2010.wrs.atributos.Atributos;
+import dev.fede2010.wrs.data.AtributosDataType;
+import dev.fede2010.wrs.data.AtributosLoaderEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,15 +28,17 @@ public class CalcularDamage {
         LivingEntity victima = event.getEntity();
         LivingEntity atacante = (LivingEntity) event.getSource().getEntity();
 
-        double slashDamage = 0;
-        double bludgeonDamage = 0;
-        double pierceDamage = 0;
-        double arcaneDamage = 0;
-        double fireDamage = 0;
-        double iceDamage = 0;
-        double electricDamage = 0;
-        double holyDamage = 0;
-        double darkDamage = 0;
+        double slashDamage;
+        double bludgeonDamage;
+        double pierceDamage;
+        double arcaneDamage;
+        double fireDamage;
+        double iceDamage;
+        double electricDamage;
+        double holyDamage;
+        double darkDamage;
+
+        double atributosMinimos = 100;
 
         float damageOriginal = event.getAmount();
 
@@ -43,16 +46,15 @@ public class CalcularDamage {
 
         if (atacante != null){
 
-            double atributosMinimos = 100;
-
-             slashDamage = calcularDamage(atacante, Atributos.SLASH.get(), victima, Atributos.SLASH_RESIST.get(), damageOriginal);
-             bludgeonDamage = calcularDamage(atacante, Atributos.BLUDGEON.get(), victima, Atributos.BLUDGEON_RESIST.get(), damageOriginal);
-             pierceDamage = calcularDamage(atacante, Atributos.PIERCE.get(), victima, Atributos.PIERCE_RESIST.get(), damageOriginal);
-             arcaneDamage = calcularDamage(atacante, Atributos.ARCANE.get(), victima, Atributos.ARCANE_RESIST.get(), damageOriginal);
-             iceDamage = calcularDamage(atacante, Atributos.ICE.get(), victima, Atributos.ICE_RESIST.get(), damageOriginal);
-             electricDamage = calcularDamage(atacante, Atributos.ELECTRIC.get(), victima, Atributos.ELECTRIC_RESIST.get(), damageOriginal);
-             holyDamage = calcularDamage(atacante, Atributos.HOLY.get(), victima, Atributos.HOLY_RESIST.get(), damageOriginal);
-             darkDamage = calcularDamage(atacante, Atributos.DARK.get(), victima, Atributos.DARK_RESIST.get(), damageOriginal);
+             slashDamage = calcularDamage(atacante.getAttributeValue(Atributos.SLASH.get()), victima.getAttributeValue(Atributos.SLASH_RESIST.get()), damageOriginal);
+             bludgeonDamage = calcularDamage(atacante.getAttributeValue(Atributos.BLUDGEON.get()), victima.getAttributeValue(Atributos.BLUDGEON_RESIST.get()), damageOriginal);
+             pierceDamage = calcularDamage(atacante.getAttributeValue(Atributos.PIERCE.get()), victima.getAttributeValue(Atributos.PIERCE_RESIST.get()), damageOriginal);
+             arcaneDamage = calcularDamage(atacante.getAttributeValue(Atributos.ARCANE.get()), victima.getAttributeValue(Atributos.ARCANE_RESIST.get()), damageOriginal);
+             fireDamage = calcularDamage(atacante.getAttributeValue(Atributos.FIRE.get()), victima.getAttributeValue(Atributos.FIRE_RESIST.get()), damageOriginal);
+             iceDamage = calcularDamage(atacante.getAttributeValue(Atributos.ICE.get()), victima.getAttributeValue(Atributos.ICE_RESIST.get()), damageOriginal);
+             electricDamage = calcularDamage(atacante.getAttributeValue(Atributos.ELECTRIC.get()), victima.getAttributeValue(Atributos.ELECTRIC_RESIST.get()), damageOriginal);
+             holyDamage = calcularDamage(atacante.getAttributeValue(Atributos.HOLY.get()), victima.getAttributeValue(Atributos.HOLY_RESIST.get()), damageOriginal);
+             darkDamage = calcularDamage(atacante.getAttributeValue(Atributos.DARK.get()), victima.getAttributeValue(Atributos.DARK_RESIST.get()), damageOriginal);
 
             double damageModificado = slashDamage + bludgeonDamage + pierceDamage + arcaneDamage + fireDamage + iceDamage + electricDamage + holyDamage + darkDamage;
 
@@ -82,97 +84,43 @@ public class CalcularDamage {
                 }
             }
         }else {
-            // Arrays de IDs para cada atributo. Más adelante hacer que se implementen desde un datapack.
-            String[] slashDamageIds  = {"minecraft:cactus", "minecraft:sweetberrybush"};  // Ejemplo
-            String[] bludgeonDamageIds  = {"minecraft:falling_block", "minecraft:falling_anvil", "minecraft:fall", "minecraft:thrown", "minecraft:fireworks", "minecraft:explosion"};  // Ejemplo
-            String[] pierceDamageIds  = {"minecraft:arrow", "minecraft:trident", "minecraft:falling_stalactite", "minecraft:stalagmite", "minecraft:thorns"};  // Ejemplo
-            String[] arcaneDamageIds  = {"minecraft:magic"};  // Ejemplo
-            String[] fireDamageIds   = {"minecraft:infire", "minecraft:onfire", "minecraft:hotfloor", "minecraft:lava", "minecraft:unattributed_fireball"};
-            String[] iceDamageIds    = {"minecraft:freeze", "minecraft:drown"}; // Ejemplo
-            String[] electricIds     = {"minecraft:lightningBolt"}; // Ejemplo
-            String[] holyIds         = {"minecraft:indirect_magic"}; // Ejemplo
-            String[] darkIds         = {"minecraft:wither", "minecraft:poison", "minecraft:sonic_boom", "minecraft:wither_skull"}; // Ejemplo
 
-            boolean damageEncontrado = false;
+            String damageType = new ResourceLocation(event.getSource().getMsgId().toLowerCase(Locale.ROOT)).toString();
 
-            if (isMatchingDamageType(event, slashDamageIds)){
-                slashDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.SLASH_RESIST.get()));
-                damageEncontrado = true;
-            }
+            AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(new ResourceLocation(damageType));
+            if (dataGrupo == null)return;
 
-            if (isMatchingDamageType(event, bludgeonDamageIds)){
-                bludgeonDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.BLUDGEON_RESIST.get()));
-                damageEncontrado = true;
-            }
-
-            if (isMatchingDamageType(event, pierceDamageIds)){
-                pierceDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.PIERCE_RESIST.get()));
-                damageEncontrado = true;
-            }
-
-            if (isMatchingDamageType(event, arcaneDamageIds)){
-                arcaneDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.ARCANE_RESIST.get()));
-                damageEncontrado = true;
-            }
-
-            if (isMatchingDamageType(event, fireDamageIds)){
-                fireDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.FIRE_RESIST.get()));
-                damageEncontrado = true;
-            }
-
-            if (isMatchingDamageType(event, iceDamageIds)){
-                iceDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.ICE_RESIST.get()));
-                damageEncontrado = true;
-            }
-
-            if (isMatchingDamageType(event, electricIds)){
-                electricDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.ELECTRIC_RESIST.get()));
-                damageEncontrado = true;
-            }
-
-            if (isMatchingDamageType(event, holyIds)){
-                holyDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.HOLY_RESIST.get()));
-                damageEncontrado = true;
-            }
-
-            if (isMatchingDamageType(event, darkIds)){
-                darkDamage = calcularResistencia(damageOriginal, victima.getAttributeValue(Atributos.DARK_RESIST.get()));
-                damageEncontrado = true;
-            }
+            slashDamage = calcularDamage(dataGrupo.damage().getSlash(), victima.getAttributeValue(Atributos.SLASH_RESIST.get()), damageOriginal);
+            bludgeonDamage = calcularDamage(dataGrupo.damage().getBludgeon(), victima.getAttributeValue(Atributos.BLUDGEON_RESIST.get()), damageOriginal);
+            pierceDamage = calcularDamage(dataGrupo.damage().getPierce(), victima.getAttributeValue(Atributos.PIERCE_RESIST.get()), damageOriginal);
+            arcaneDamage = calcularDamage(dataGrupo.damage().getArcane(), victima.getAttributeValue(Atributos.ARCANE_RESIST.get()), damageOriginal);
+            fireDamage = calcularDamage(dataGrupo.damage().getFire(), victima.getAttributeValue(Atributos.FIRE_RESIST.get()), damageOriginal);
+            iceDamage = calcularDamage(dataGrupo.damage().getIce(), victima.getAttributeValue(Atributos.ICE_RESIST.get()), damageOriginal);
+            electricDamage = calcularDamage(dataGrupo.damage().getElectric(), victima.getAttributeValue(Atributos.ELECTRIC_RESIST.get()), damageOriginal);
+            holyDamage = calcularDamage(dataGrupo.damage().getHoly(), victima.getAttributeValue(Atributos.HOLY_RESIST.get()), damageOriginal);
+            darkDamage = calcularDamage(dataGrupo.damage().getDark(), victima.getAttributeValue(Atributos.DARK_RESIST.get()), damageOriginal);
 
             double damageModificado = slashDamage + bludgeonDamage + pierceDamage + arcaneDamage + fireDamage + iceDamage + electricDamage + holyDamage + darkDamage;
 
-            if (damageEncontrado){
-                event.setAmount((float) damageModificado);
-            }else {
-                event.setAmount(damageOriginal);
+            atributosMinimos = atributosMinimos - Atributos.atributosTotales(dataGrupo);
+
+            if (atributosMinimos > 0){
+                damageModificado = damageModificado + (damageOriginal * (atributosMinimos / 100));
             }
+
+            event.setAmount((float) damageModificado);
 
         }
 
     }
 
-    // Metodo auxiliar que verifica si el ID del daño recibido coincide con alguno de los IDs del array.
-    private static boolean isMatchingDamageType(LivingHurtEvent event, String[] damageIds) {
-        String msgId = new ResourceLocation(event.getSource().getMsgId().toLowerCase(Locale.ROOT)).toString();
-        for (String id : damageIds) {
-            if (msgId.equals(id)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static double calcularDamage(LivingEntity atacante, Attribute atributoAtacante, LivingEntity victima, Attribute atributoVictima, float damageOriginal){
+    public static double calcularDamage(double ataqueValor, double defensaValor, float damageOriginal){
 
         double damageFinal = 0.0;
 
-        double atacanteValor = atacante.getAttributeValue(atributoAtacante);
-        double victimaValor = victima.getAttributeValue(atributoVictima);
-
-        if (atacanteValor > 0){
-            damageFinal = damageOriginal * (atacanteValor / 100);
-            damageFinal = calcularResistencia(damageFinal, victimaValor);
+        if (ataqueValor > 0){
+            damageFinal = damageOriginal * (ataqueValor / 100);
+            damageFinal = calcularResistencia(damageFinal, defensaValor);
         }
 
         return damageFinal;

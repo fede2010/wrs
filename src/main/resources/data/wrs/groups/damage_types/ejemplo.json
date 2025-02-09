@@ -1,0 +1,7 @@
+{
+  "ids": ["minecraft:explosion", "minecraft:arrow"],
+  "damage": {
+    "bludgeon": 50.0,
+    "fire": 50.0
+  }
+}

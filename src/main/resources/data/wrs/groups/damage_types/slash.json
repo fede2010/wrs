@@ -1,0 +1,6 @@
+{
+  "ids": ["minecraft:cactus", "minecraft:sweetberrybush"],
+  "damage": {
+    "slash": 100.0
+  }
+}

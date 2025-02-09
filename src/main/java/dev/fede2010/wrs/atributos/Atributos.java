@@ -84,6 +84,27 @@ public class Atributos {
         return atributosTotales;
     }
 
+    public static double atributosTotales(AtributosDataType data) {
+        double[] dataType = {
+                data.damage().getSlash(),
+                data.damage().getBludgeon(),
+                data.damage().getPierce(),
+                data.damage().getArcane(),
+                data.damage().getFire(),
+                data.damage().getIce(),
+                data.damage().getElectric(),
+                data.damage().getHoly(),
+                data.damage().getDark()
+        };
+
+        double atributosTotales = 0.0;
+        for (double attr : dataType) {
+            atributosTotales += attr;
+        }
+
+        return atributosTotales;
+    }
+
 
     public static void register(IEventBus eventBus){
         ATTRIBUTES.register(eventBus);
