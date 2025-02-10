@@ -1,14 +1,10 @@
 package dev.fede2010.wrs.eventos;
 
-import dev.fede2010.wrs.Config;
 import dev.fede2010.wrs.Wrs;
 import dev.fede2010.wrs.atributos.Atributos;
 import dev.fede2010.wrs.data.AtributosDataType;
 import dev.fede2010.wrs.data.AtributosLoaderEvent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,6 +24,8 @@ public class CalcularDamage {
         LivingEntity victima = event.getEntity();
         LivingEntity atacante = (LivingEntity) event.getSource().getEntity();
 
+        float damageOriginal = event.getAmount();
+
         double slashDamage;
         double bludgeonDamage;
         double pierceDamage;
@@ -40,7 +38,7 @@ public class CalcularDamage {
 
         double atributosMinimos = 100;
 
-        float damageOriginal = event.getAmount();
+        double damageModificado;
 
         if (victima == null) return;
 
@@ -56,7 +54,7 @@ public class CalcularDamage {
              holyDamage = calcularDamage(atacante.getAttributeValue(Atributos.HOLY.get()), victima.getAttributeValue(Atributos.HOLY_RESIST.get()), damageOriginal);
              darkDamage = calcularDamage(atacante.getAttributeValue(Atributos.DARK.get()), victima.getAttributeValue(Atributos.DARK_RESIST.get()), damageOriginal);
 
-            double damageModificado = slashDamage + bludgeonDamage + pierceDamage + arcaneDamage + fireDamage + iceDamage + electricDamage + holyDamage + darkDamage;
+             damageModificado = slashDamage + bludgeonDamage + pierceDamage + arcaneDamage + fireDamage + iceDamage + electricDamage + holyDamage + darkDamage;
 
             atributosMinimos = atributosMinimos - Atributos.atributosTotales(atacante);
 
@@ -65,24 +63,6 @@ public class CalcularDamage {
             }
 
             event.setAmount((float) damageModificado);
-
-            if (Config.debug){
-                if (event.getSource().getEntity() instanceof ServerPlayer player) {
-
-                    mensaje(player, Wrs.MODID + ".initial_damage", damageOriginal, ChatFormatting.GREEN);
-                    mensaje(player, Wrs.MODID + ".value.slash", slashDamage, ChatFormatting.GRAY);
-                    mensaje(player, Wrs.MODID + ".value.bludgeon", bludgeonDamage, ChatFormatting.GRAY);
-                    mensaje(player, Wrs.MODID + ".value.pierce", pierceDamage, ChatFormatting.GRAY);
-                    mensaje(player, Wrs.MODID + ".value.arcane", arcaneDamage, ChatFormatting.GRAY);
-                    mensaje(player, Wrs.MODID + ".value.fire", fireDamage, ChatFormatting.RED);
-                    mensaje(player, Wrs.MODID + ".value.ice", iceDamage, ChatFormatting.AQUA);
-                    mensaje(player, Wrs.MODID + ".value.electric", electricDamage, ChatFormatting.YELLOW);
-                    mensaje(player, Wrs.MODID + ".value.holy", holyDamage, ChatFormatting.WHITE);
-                    mensaje(player, Wrs.MODID + ".value.dark", darkDamage, ChatFormatting.DARK_GRAY);
-                    mensaje(player, Wrs.MODID + ".final_damage", damageModificado, ChatFormatting.GREEN);
-
-                }
-            }
         }else {
 
             String damageType = new ResourceLocation(event.getSource().getMsgId().toLowerCase(Locale.ROOT)).toString();
@@ -100,7 +80,7 @@ public class CalcularDamage {
             holyDamage = calcularDamage(dataGrupo.damage().getHoly(), victima.getAttributeValue(Atributos.HOLY_RESIST.get()), damageOriginal);
             darkDamage = calcularDamage(dataGrupo.damage().getDark(), victima.getAttributeValue(Atributos.DARK_RESIST.get()), damageOriginal);
 
-            double damageModificado = slashDamage + bludgeonDamage + pierceDamage + arcaneDamage + fireDamage + iceDamage + electricDamage + holyDamage + darkDamage;
+            damageModificado = slashDamage + bludgeonDamage + pierceDamage + arcaneDamage + fireDamage + iceDamage + electricDamage + holyDamage + darkDamage;
 
             atributosMinimos = atributosMinimos - Atributos.atributosTotales(dataGrupo);
 
@@ -111,6 +91,8 @@ public class CalcularDamage {
             event.setAmount((float) damageModificado);
 
         }
+
+        MostrarCalculo.obtenerDatos(damageOriginal, slashDamage, bludgeonDamage, pierceDamage, arcaneDamage, fireDamage, iceDamage, electricDamage, holyDamage, darkDamage, damageModificado);
 
     }
 
@@ -134,11 +116,6 @@ public class CalcularDamage {
         }else damage *= 1 + (Math.abs(resistencia) / 100);
 
         return damage;
-    }
-
-    public static void mensaje(ServerPlayer serverPlayer, String translatable, double damage, ChatFormatting color){
-        serverPlayer.sendSystemMessage(Component.translatable(translatable, damage)
-                .withStyle(color));
     }
 
 }
