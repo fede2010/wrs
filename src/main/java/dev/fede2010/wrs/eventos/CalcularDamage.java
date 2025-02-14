@@ -5,6 +5,7 @@ import dev.fede2010.wrs.atributos.Atributos;
 import dev.fede2010.wrs.data.AtributosDataType;
 import dev.fede2010.wrs.data.AtributosLoaderEvent;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -65,9 +66,12 @@ public class CalcularDamage {
         }else {
 
             ResourceKey<DamageType> damageTypeResourceKey = event.getSource().typeHolder().unwrapKey().orElse(null);
-            if (damageTypeResourceKey == null)return;
+            ResourceLocation damagetype = new ResourceLocation("");
+            if (damageTypeResourceKey != null){
+                damagetype = damageTypeResourceKey.location();
+            }
 
-            AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(damageTypeResourceKey.location());
+            AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(damagetype);
             if (dataGrupo == null)return;
 
             slashDamage = calcularDamage(dataGrupo.damage().getSlash(), victima.getAttributeValue(Atributos.SLASH_RESIST.get()), damageOriginal);
