@@ -4,13 +4,12 @@ import dev.fede2010.wrs.Wrs;
 import dev.fede2010.wrs.atributos.Atributos;
 import dev.fede2010.wrs.data.AtributosDataType;
 import dev.fede2010.wrs.data.AtributosLoaderEvent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.Locale;
 
 @Mod.EventBusSubscriber(
         modid = Wrs.MODID,
@@ -65,9 +64,10 @@ public class CalcularDamage {
             event.setAmount((float) damageModificado);
         }else {
 
-            String damageType = new ResourceLocation(event.getSource().getMsgId().toLowerCase(Locale.ROOT)).toString();
+            ResourceKey<DamageType> damageTypeResourceKey = event.getSource().typeHolder().unwrapKey().orElse(null);
+            if (damageTypeResourceKey == null)return;
 
-            AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(new ResourceLocation(damageType));
+            AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(damageTypeResourceKey.location());
             if (dataGrupo == null)return;
 
             slashDamage = calcularDamage(dataGrupo.damage().getSlash(), victima.getAttributeValue(Atributos.SLASH_RESIST.get()), damageOriginal);

@@ -33,7 +33,7 @@ public class AtributosDataLoader extends SimpleJsonResourceReloadListener {
                     })
                     .ifPresent(d -> {
 
-                        if (!d.ids().isEmpty()) {
+                        if (!d.ids().isEmpty() && !d.ids().iterator().next().getPath().isEmpty()) {
                             for (ResourceLocation dataId : d.ids()) {
                                 if (this.data.containsKey(dataId)) {
                                     Wrs.LOGGER.error("ID duplicado en datos: {}", dataId);
