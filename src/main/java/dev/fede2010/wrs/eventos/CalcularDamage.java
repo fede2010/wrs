@@ -44,6 +44,12 @@ public class CalcularDamage {
 
         if (atacante != null){
 
+            if (event.getSource().isIndirect()) {
+                if (event.getSource().getDirectEntity() instanceof LivingEntity atacanteDirecto) {
+                    atacante = atacanteDirecto;
+                }
+            }
+
              slashDamage = calcularDamage(atacante.getAttributeValue(Atributos.SLASH.get()), victima.getAttributeValue(Atributos.SLASH_RESIST.get()), damageOriginal);
              bludgeonDamage = calcularDamage(atacante.getAttributeValue(Atributos.BLUDGEON.get()), victima.getAttributeValue(Atributos.BLUDGEON_RESIST.get()), damageOriginal);
              pierceDamage = calcularDamage(atacante.getAttributeValue(Atributos.PIERCE.get()), victima.getAttributeValue(Atributos.PIERCE_RESIST.get()), damageOriginal);
