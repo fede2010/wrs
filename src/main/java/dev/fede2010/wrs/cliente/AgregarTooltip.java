@@ -60,15 +60,15 @@ public class AgregarTooltip {
         agregarAtributo(event, Atributos.HOLY.get().getDescriptionId(), ChatFormatting.WHITE, resultado.damage().getHoly());
         agregarAtributo(event, Atributos.DARK.get().getDescriptionId(), ChatFormatting.DARK_GRAY, resultado.damage().getDark());
 
-        agregarAtributo(event, Atributos.SLASH_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getSlash());
-        agregarAtributo(event, Atributos.BLUDGEON_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getBludgeon());
-        agregarAtributo(event, Atributos.PIERCE_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getPierce());
-        agregarAtributo(event, Atributos.ARCANE_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.damage().getArcane());
-        agregarAtributo(event, Atributos.FIRE_RESIST.get().getDescriptionId(), ChatFormatting.RED, resultado.damage().getFire());
-        agregarAtributo(event, Atributos.ICE_RESIST.get().getDescriptionId(), ChatFormatting.AQUA, resultado.damage().getIce());
-        agregarAtributo(event, Atributos.ELECTRIC_RESIST.get().getDescriptionId(), ChatFormatting.YELLOW, resultado.damage().getElectric());
-        agregarAtributo(event, Atributos.HOLY_RESIST.get().getDescriptionId(), ChatFormatting.WHITE, resultado.damage().getHoly());
-        agregarAtributo(event, Atributos.DARK_RESIST.get().getDescriptionId(), ChatFormatting.DARK_GRAY, resultado.damage().getDark());
+        agregarAtributo(event, Atributos.SLASH_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.resistance().getSlash());
+        agregarAtributo(event, Atributos.BLUDGEON_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.resistance().getBludgeon());
+        agregarAtributo(event, Atributos.PIERCE_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.resistance().getPierce());
+        agregarAtributo(event, Atributos.ARCANE_RESIST.get().getDescriptionId(), ChatFormatting.GRAY, resultado.resistance().getArcane());
+        agregarAtributo(event, Atributos.FIRE_RESIST.get().getDescriptionId(), ChatFormatting.RED, resultado.resistance().getFire());
+        agregarAtributo(event, Atributos.ICE_RESIST.get().getDescriptionId(), ChatFormatting.AQUA, resultado.resistance().getIce());
+        agregarAtributo(event, Atributos.ELECTRIC_RESIST.get().getDescriptionId(), ChatFormatting.YELLOW, resultado.resistance().getElectric());
+        agregarAtributo(event, Atributos.HOLY_RESIST.get().getDescriptionId(), ChatFormatting.WHITE, resultado.resistance().getHoly());
+        agregarAtributo(event, Atributos.DARK_RESIST.get().getDescriptionId(), ChatFormatting.DARK_GRAY, resultado.resistance().getDark());
 
     }
 

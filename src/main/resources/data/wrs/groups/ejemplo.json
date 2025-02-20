@@ -1,15 +1,15 @@
 {
-  "ids": ["minecraft:cactus", "minecraft:arrow"],
+  "ids": ["minecraft:zombie", "minecraft:pig"],
   "damage": {
     "slash": 0.0,
     "bludgeon": 0.0,
-    "pierce": 0.0,
+    "pierce": 100.0,
     "arcane": 0.0,
     "fire": 0.0,
     "ice": 0.0,
     "electric": 0.0,
     "holy": 0.0,
-    "dark": 50.0
+    "dark": 0.0
   },
   "resistance": {
     "slash": 0.0,

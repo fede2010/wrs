@@ -2,8 +2,8 @@ package dev.fede2010.wrs.eventos;
 
 import dev.fede2010.wrs.Wrs;
 import dev.fede2010.wrs.atributos.Atributos;
-import dev.fede2010.wrs.data.AtributosDataType;
-import dev.fede2010.wrs.data.AtributosLoaderEvent;
+import dev.fede2010.wrs.data.DataLoaderEvent;
+import dev.fede2010.wrs.data.DamageTypeData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
@@ -38,11 +38,24 @@ public class CalcularDamage {
 
         double atributosMinimos = 100;
 
+        boolean especial = false;
+
         double damageModificado;
 
         if (victima == null) return;
 
-        if (atacante != null){
+        ResourceKey<DamageType> damageTypeResourceKey = event.getSource().typeHolder().unwrapKey().orElse(null);
+        ResourceLocation damagetype = new ResourceLocation("");
+        if (damageTypeResourceKey != null){
+            damagetype = damageTypeResourceKey.location();
+        }
+
+        DamageTypeData dataDamage = DataLoaderEvent.DAMAGE_TYPES.getData().get(damagetype);
+        if (dataDamage != null){
+            especial = dataDamage.special();
+        }
+
+        if (atacante != null && !especial){
 
             if (event.getSource().isIndirect()) {
                 if (event.getSource().getDirectEntity() instanceof LivingEntity atacanteDirecto) {
@@ -71,28 +84,21 @@ public class CalcularDamage {
             event.setAmount((float) damageModificado);
         }else {
 
-            ResourceKey<DamageType> damageTypeResourceKey = event.getSource().typeHolder().unwrapKey().orElse(null);
-            ResourceLocation damagetype = new ResourceLocation("");
-            if (damageTypeResourceKey != null){
-                damagetype = damageTypeResourceKey.location();
-            }
+            if (dataDamage == null)return;
 
-            AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(damagetype);
-            if (dataGrupo == null)return;
-
-            slashDamage = calcularDamage(dataGrupo.damage().getSlash(), victima.getAttributeValue(Atributos.SLASH_RESIST.get()), damageOriginal);
-            bludgeonDamage = calcularDamage(dataGrupo.damage().getBludgeon(), victima.getAttributeValue(Atributos.BLUDGEON_RESIST.get()), damageOriginal);
-            pierceDamage = calcularDamage(dataGrupo.damage().getPierce(), victima.getAttributeValue(Atributos.PIERCE_RESIST.get()), damageOriginal);
-            arcaneDamage = calcularDamage(dataGrupo.damage().getArcane(), victima.getAttributeValue(Atributos.ARCANE_RESIST.get()), damageOriginal);
-            fireDamage = calcularDamage(dataGrupo.damage().getFire(), victima.getAttributeValue(Atributos.FIRE_RESIST.get()), damageOriginal);
-            iceDamage = calcularDamage(dataGrupo.damage().getIce(), victima.getAttributeValue(Atributos.ICE_RESIST.get()), damageOriginal);
-            electricDamage = calcularDamage(dataGrupo.damage().getElectric(), victima.getAttributeValue(Atributos.ELECTRIC_RESIST.get()), damageOriginal);
-            holyDamage = calcularDamage(dataGrupo.damage().getHoly(), victima.getAttributeValue(Atributos.HOLY_RESIST.get()), damageOriginal);
-            darkDamage = calcularDamage(dataGrupo.damage().getDark(), victima.getAttributeValue(Atributos.DARK_RESIST.get()), damageOriginal);
+            slashDamage = calcularDamage(dataDamage.damage().getSlash(), victima.getAttributeValue(Atributos.SLASH_RESIST.get()), damageOriginal);
+            bludgeonDamage = calcularDamage(dataDamage.damage().getBludgeon(), victima.getAttributeValue(Atributos.BLUDGEON_RESIST.get()), damageOriginal);
+            pierceDamage = calcularDamage(dataDamage.damage().getPierce(), victima.getAttributeValue(Atributos.PIERCE_RESIST.get()), damageOriginal);
+            arcaneDamage = calcularDamage(dataDamage.damage().getArcane(), victima.getAttributeValue(Atributos.ARCANE_RESIST.get()), damageOriginal);
+            fireDamage = calcularDamage(dataDamage.damage().getFire(), victima.getAttributeValue(Atributos.FIRE_RESIST.get()), damageOriginal);
+            iceDamage = calcularDamage(dataDamage.damage().getIce(), victima.getAttributeValue(Atributos.ICE_RESIST.get()), damageOriginal);
+            electricDamage = calcularDamage(dataDamage.damage().getElectric(), victima.getAttributeValue(Atributos.ELECTRIC_RESIST.get()), damageOriginal);
+            holyDamage = calcularDamage(dataDamage.damage().getHoly(), victima.getAttributeValue(Atributos.HOLY_RESIST.get()), damageOriginal);
+            darkDamage = calcularDamage(dataDamage.damage().getDark(), victima.getAttributeValue(Atributos.DARK_RESIST.get()), damageOriginal);
 
             damageModificado = slashDamage + bludgeonDamage + pierceDamage + arcaneDamage + fireDamage + iceDamage + electricDamage + holyDamage + darkDamage;
 
-            atributosMinimos = atributosMinimos - Atributos.atributosTotales(dataGrupo);
+            atributosMinimos = atributosMinimos - Atributos.atributosTotales(dataDamage);
 
             if (atributosMinimos > 0){
                 damageModificado = damageModificado + (damageOriginal * (atributosMinimos / 100));

@@ -2,6 +2,7 @@ package dev.fede2010.wrs.atributos;
 
 import dev.fede2010.wrs.Wrs;
 import dev.fede2010.wrs.data.AtributosDataType;
+import dev.fede2010.wrs.data.DamageTypeData;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -84,7 +85,7 @@ public class Atributos {
         return atributosTotales;
     }
 
-    public static double atributosTotales(AtributosDataType data) {
+    public static double atributosTotales(DamageTypeData data) {
         double[] dataType = {
                 data.damage().getSlash(),
                 data.damage().getBludgeon(),

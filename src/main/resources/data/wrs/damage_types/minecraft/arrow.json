@@ -2,12 +2,13 @@
   "damage": {
     "slash": 0.0,
     "bludgeon": 0.0,
-    "pierce": 0.0,
+    "pierce": 100.0,
     "arcane": 0.0,
     "fire": 0.0,
     "ice": 0.0,
     "electric": 0.0,
     "holy": 0.0,
-    "dark": 30.0
-  }
+    "dark": 0.0
+  },
+  "special": true
 }

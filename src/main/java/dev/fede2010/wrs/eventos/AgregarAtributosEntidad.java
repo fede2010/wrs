@@ -3,7 +3,7 @@ package dev.fede2010.wrs.eventos;
 import dev.fede2010.wrs.Wrs;
 import dev.fede2010.wrs.atributos.Atributos;
 import dev.fede2010.wrs.data.AtributosDataType;
-import dev.fede2010.wrs.data.AtributosLoaderEvent;
+import dev.fede2010.wrs.data.DataLoaderEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,8 +37,8 @@ public class AgregarAtributosEntidad {
             return;
         }
 
-        AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(entityId);
-        AtributosDataType dataEntidad = AtributosLoaderEvent.ENTITIES.getData().get(entityId);
+        AtributosDataType dataGrupo = DataLoaderEvent.GROUPS.getData().get(entityId);
+        AtributosDataType dataEntidad = DataLoaderEvent.ENTITIES.getData().get(entityId);
 
         AtributosDataType resultado;
 

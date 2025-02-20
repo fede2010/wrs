@@ -3,7 +3,7 @@ package dev.fede2010.wrs.eventos;
 import dev.fede2010.wrs.Wrs;
 import dev.fede2010.wrs.atributos.Atributos;
 import dev.fede2010.wrs.data.AtributosDataType;
-import dev.fede2010.wrs.data.AtributosLoaderEvent;
+import dev.fede2010.wrs.data.DataLoaderEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -44,8 +44,8 @@ public class AgregarModificadorItem {
             return;
         }
 
-        AtributosDataType dataGrupo = AtributosLoaderEvent.GROUPS.getData().get(itemStackId);
-        AtributosDataType dataItem = AtributosLoaderEvent.ITEMS.getData().get(itemStackId);
+        AtributosDataType dataGrupo = DataLoaderEvent.GROUPS.getData().get(itemStackId);
+        AtributosDataType dataItem = DataLoaderEvent.ITEMS.getData().get(itemStackId);
 
         AtributosDataType resultado;
 
