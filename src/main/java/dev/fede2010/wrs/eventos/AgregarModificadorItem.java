@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,6 +27,7 @@ import java.util.UUID;
 public class AgregarModificadorItem {
 
     private static final Map<Attribute, UUID> mainHand = new HashMap<>();
+    private static final Map<Attribute, UUID> offHand = new HashMap<>();
     private static final Map<Attribute, UUID> head = new HashMap<>();
     private static final Map<Attribute, UUID> chest = new HashMap<>();
     private static final Map<Attribute, UUID> legs = new HashMap<>();
@@ -59,16 +61,24 @@ public class AgregarModificadorItem {
             resultado = AtributosDataType.reemplazarValores(dataGrupo, dataItem);
         }
 
-        mapeo(mainHand);
-        mapeo(head);
-        mapeo(chest);
-        mapeo(legs);
-        mapeo(feet);
+        mainHand.clear();
+        offHand.clear();
+        head.clear();
+        chest.clear();
+        legs.clear();
+        feet.clear();
+
+        mapeo(mainHand, event);
+        mapeo(offHand, event);
+        mapeo(head, event);
+        mapeo(chest, event);
+        mapeo(legs, event);
+        mapeo(feet, event);
 
         // Verifica si el ítem es una armadura
-        if (event.getItemStack().getItem() instanceof ArmorItem) {
+        if (itemStack.getItem() instanceof ArmorItem) {
             // Obtiene el tipo de ranura de equipo de la armadura
-            EquipmentSlot armorSlot = ((ArmorItem) event.getItemStack().getItem()).getEquipmentSlot();
+            EquipmentSlot armorSlot = ((ArmorItem) itemStack.getItem()).getEquipmentSlot();
             // Verifica si el slot actual coincide con el tipo de ranura de equipo de la armadura
             if (event.getSlotType() == armorSlot) {
 
@@ -88,7 +98,10 @@ public class AgregarModificadorItem {
                     crearModificador(event, feet, resultado);
                 }
             }
-        } else if (event.getSlotType() == EquipmentSlot.MAINHAND) {
+        } else if (itemStack.getItem() instanceof ShieldItem && event.getSlotType() == EquipmentSlot.OFFHAND) {
+            crearModificador(event, offHand, resultado);
+        }
+        else if (!(itemStack.getItem() instanceof ShieldItem) && event.getSlotType() == EquipmentSlot.MAINHAND) {
             crearModificador(event, mainHand, resultado);
         }
     }
@@ -116,32 +129,32 @@ public class AgregarModificadorItem {
         event.addModifier(Atributos.DARK_RESIST.get(), new AttributeModifier(map.get(Atributos.DARK_RESIST.get()), Atributos.DARK_RESIST.get() + ":" + event.getSlotType(), data.resistance().getDark(), AttributeModifier.Operation.ADDITION));
     }
 
-    public static void mapeo(Map<Attribute, UUID> map){
-
+    public static void mapeo(Map<Attribute, UUID> map, ItemAttributeModifierEvent event) {
         if (map.isEmpty()) {
 
-            map.put(Atributos.SLASH.get(), UUID.fromString("e1f89a2a-4a3e-4d9a-9b78-3a1c9d1b6e72"));
-            map.put(Atributos.BLUDGEON.get(), UUID.fromString("cd2d3c15-6a1e-45bb-bc0b-3f1a8b7ab4d1"));
-            map.put(Atributos.PIERCE.get(), UUID.fromString("7e93a9d9-0a75-445d-89a1-bc865f787baa"));
-            map.put(Atributos.ARCANE.get(), UUID.fromString("4d2b4e14-bb78-41fc-b4f9-1a6f3e59c9f0"));
-            map.put(Atributos.FIRE.get(), UUID.fromString("f9a3d5b2-2c68-4b0d-9f31-3b12f7a6b2d7"));
-            map.put(Atributos.ICE.get(), UUID.fromString("ba98a3d9-9e1d-4387-8706-8e7d5e4baf55"));
-            map.put(Atributos.ELECTRIC.get(), UUID.fromString("1a5bcd32-cc9b-4a58-b456-9ab7e6d9e847"));
-            map.put(Atributos.HOLY.get(), UUID.fromString("ff573d2a-9c2d-4a39-91f5-4f9c61b785c3"));
-            map.put(Atributos.DARK.get(), UUID.fromString("9c3f2e4d-b1db-40da-8d2a-8d7f58c72f88"));
+            String evento = event.getItemStack().getItem().getDescriptionId() + ":";
 
-            map.put(Atributos.SLASH_RESIST.get(), UUID.fromString("2d8b7e6c-9343-41b9-93a6-9d1f3d1a2e21"));
-            map.put(Atributos.BLUDGEON_RESIST.get(), UUID.fromString("5eaf3c2f-d5f2-47d2-87d3-2b3f4f2e1b21"));
-            map.put(Atributos.PIERCE_RESIST.get(), UUID.fromString("b4f1a9c8-5a3b-41b2-8f4f-0c9e1a9f7899"));
-            map.put(Atributos.ARCANE_RESIST.get(), UUID.fromString("cf5b9e12-6c7d-4a12-8f7e-3d8f1c9d7d8b"));
-            map.put(Atributos.FIRE_RESIST.get(), UUID.fromString("d6c7e3f5-2f89-452e-81e3-1a7c5d9b9b33"));
-            map.put(Atributos.ICE_RESIST.get(), UUID.fromString("3b8f1c9d-6f5e-4a93-b6f7-1d9e7a8b7d44"));
-            map.put(Atributos.ELECTRIC_RESIST.get(), UUID.fromString("c9e1b6a7-4f5d-482e-92e7-7d3f4a2f9f10"));
-            map.put(Atributos.HOLY_RESIST.get(), UUID.fromString("1f8b7c2a-8d4e-4a3e-93d7-3c7f1b5d2e99"));
-            map.put(Atributos.DARK_RESIST.get(), UUID.fromString("9a3d5e2a-7f4b-4a2e-98d7-1f6b3c2d7e22"));
+            map.put(Atributos.SLASH.get(), UUID.nameUUIDFromBytes((evento + "SLASH").getBytes()));
+            map.put(Atributos.BLUDGEON.get(), UUID.nameUUIDFromBytes((evento + "BLUDGEON").getBytes()));
+            map.put(Atributos.PIERCE.get(), UUID.nameUUIDFromBytes((evento + "PIERCE").getBytes()));
+            map.put(Atributos.ARCANE.get(), UUID.nameUUIDFromBytes((evento + "ARCANE").getBytes()));
+            map.put(Atributos.FIRE.get(), UUID.nameUUIDFromBytes((evento + "FIRE").getBytes()));
+            map.put(Atributos.ICE.get(), UUID.nameUUIDFromBytes((evento + "ICE").getBytes()));
+            map.put(Atributos.ELECTRIC.get(), UUID.nameUUIDFromBytes((evento + "ELECTRIC").getBytes()));
+            map.put(Atributos.HOLY.get(), UUID.nameUUIDFromBytes((evento + "HOLY").getBytes()));
+            map.put(Atributos.DARK.get(), UUID.nameUUIDFromBytes((evento + "DARK").getBytes()));
+
+            map.put(Atributos.SLASH_RESIST.get(), UUID.nameUUIDFromBytes((evento + "SLASH_RESIST").getBytes()));
+            map.put(Atributos.BLUDGEON_RESIST.get(), UUID.nameUUIDFromBytes((evento + "BLUDGEON_RESIST").getBytes()));
+            map.put(Atributos.PIERCE_RESIST.get(), UUID.nameUUIDFromBytes((evento + "PIERCE_RESIST").getBytes()));
+            map.put(Atributos.ARCANE_RESIST.get(), UUID.nameUUIDFromBytes((evento + "ARCANE_RESIST").getBytes()));
+            map.put(Atributos.FIRE_RESIST.get(), UUID.nameUUIDFromBytes((evento + "FIRE_RESIST").getBytes()));
+            map.put(Atributos.ICE_RESIST.get(), UUID.nameUUIDFromBytes((evento + "ICE_RESIST").getBytes()));
+            map.put(Atributos.ELECTRIC_RESIST.get(), UUID.nameUUIDFromBytes((evento + "ELECTRIC_RESIST").getBytes()));
+            map.put(Atributos.HOLY_RESIST.get(), UUID.nameUUIDFromBytes((evento + "HOLY_RESIST").getBytes()));
+            map.put(Atributos.DARK_RESIST.get(), UUID.nameUUIDFromBytes((evento + "DARK_RESIST").getBytes()));
 
         }
 
     }
-    
 }
