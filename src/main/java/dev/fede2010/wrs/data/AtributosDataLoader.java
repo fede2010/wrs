@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,24 +23,30 @@ public class AtributosDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<ResourceLocation, JsonElement> jsons, @NotNull ResourceManager manager, @NotNull ProfilerFiller profiler) {
         this.data.clear();
 
         jsons.forEach((fileId, json) -> {
 
             AtributosDataType.CODEC.parse(JsonOps.INSTANCE, json)
                     .resultOrPartial(error -> {
-                        Wrs.LOGGER.error("Error al cargar {}: {}", fileId, error);
+                        Wrs.LOGGER.error("Error loading {}: {}", fileId, error);
                     })
                     .ifPresent(d -> {
 
                         if (!d.ids().isEmpty() && !d.ids().iterator().next().getPath().isEmpty()) {
                             for (ResourceLocation dataId : d.ids()) {
                                 if (this.data.containsKey(dataId)) {
-                                    Wrs.LOGGER.error("ID duplicado en datos: {}", dataId);
-                                    continue;
+
+                                    AtributosData damageFinal = d.damage().combinar(this.data.get(dataId).damage());
+                                    AtributosData resistenciaFinal = d.resistance().combinar(this.data.get(dataId).resistance());
+
+                                    AtributosDataType nuevo = new AtributosDataType(d.ids(), damageFinal, resistenciaFinal);
+
+                                    this.data.put(dataId, nuevo);
+                                } else {
+                                    this.data.put(dataId, d);
                                 }
-                                this.data.put(dataId, d);
                             }
                         } else {
                             // Lógica nueva para archivos individuales
@@ -55,7 +62,7 @@ public class AtributosDataLoader extends SimpleJsonResourceReloadListener {
 
                                 this.data.put(targetId, d);
                             } else {
-                                Wrs.LOGGER.error("Ruta inválida para archivo individual: {}", fileId);
+                                Wrs.LOGGER.error("Invalid path for single file: {}", fileId);
                             }
                         }
                     });

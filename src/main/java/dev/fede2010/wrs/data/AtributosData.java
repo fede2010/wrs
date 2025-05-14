@@ -77,5 +77,20 @@ public record AtributosData(
     public Double getDark() {
         return dark.orElse(0.0);
     }
+
+    public AtributosData combinar(AtributosData atributosDataNuevo) {
+        return new AtributosData(
+                Optional.of(this.getSlash() + atributosDataNuevo.getSlash()),
+                Optional.of(this.getBludgeon() + atributosDataNuevo.getBludgeon()),
+                Optional.of(this.getPierce() + atributosDataNuevo.getPierce()),
+                Optional.of(this.getArcane() + atributosDataNuevo.getArcane()),
+                Optional.of(this.getFire() + atributosDataNuevo.getFire()),
+                Optional.of(this.getIce() + atributosDataNuevo.getIce()),
+                Optional.of(this.getElectric() + atributosDataNuevo.getElectric()),
+                Optional.of(this.getHoly() + atributosDataNuevo.getHoly()),
+                Optional.of(this.getDark() + atributosDataNuevo.getDark())
+        );
+    }
+
 }
 

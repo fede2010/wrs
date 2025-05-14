@@ -61,7 +61,7 @@ public class AgregarAtributosEntidad {
                 if (attributeInstance != null) {
                     attributeInstance.setBaseValue(entry.getValue());
                 } else {
-                    Wrs.LOGGER.warn("Atributo no encontrado: {}", entry.getKey());
+                    Wrs.LOGGER.warn("Attribute not found: {}", entry.getKey());
                 }
             }
         }

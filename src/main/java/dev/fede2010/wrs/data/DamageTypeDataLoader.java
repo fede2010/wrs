@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,14 +23,14 @@ public class DamageTypeDataLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager manager, ProfilerFiller profiler) {
+    protected void apply(Map<ResourceLocation, JsonElement> jsons, @NotNull ResourceManager manager, @NotNull ProfilerFiller profiler) {
         this.data.clear();
 
         jsons.forEach((fileId, json) -> {
 
             DamageTypeData.CODEC.parse(JsonOps.INSTANCE, json)
                     .resultOrPartial(error -> {
-                        Wrs.LOGGER.error("Error al cargar {}: {}", fileId, error);
+                        Wrs.LOGGER.error("Error loading {}: {}", fileId, error);
                     })
                     .ifPresent(d -> {
 
@@ -47,7 +48,7 @@ public class DamageTypeDataLoader extends SimpleJsonResourceReloadListener {
 
                                 this.data.put(targetId, d);
                             } else {
-                                Wrs.LOGGER.error("Ruta inválida para archivo individual: {}", fileId);
+                                Wrs.LOGGER.error("Invalid path for single file: {}", fileId);
                             }
                         }
                     });
