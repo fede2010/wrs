@@ -41,5 +41,8 @@
     "wrs.value.dark_resist": "Resistencia a la Oscuridad: %s",
     "wrs.initial_damage": "Daño Inicial: %s",
     "wrs.final_damage": "Daño Final: %s",
-    "wrs.no_data": "No se encontraron datos para el tipo de daño %s"
+    "wrs.no_data": "No se encontraron datos para el tipo de daño %s",
+    "wrs.key.show_defenses": "Mostrar Defensas",
+    "wrs.key.gui": "WRS"
+
 }

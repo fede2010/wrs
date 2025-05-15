@@ -72,7 +72,7 @@ public class Wrs {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            MinecraftForge.EVENT_BUS.register(Tecla.class);
+
         }
     }
 }
