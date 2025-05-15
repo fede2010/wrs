@@ -28,10 +28,6 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
 
     int contador = 0;
 
-    public static final String ATAQUE = "Daño";
-    public static final String RESISTENCIA = "Resistencia";
-    public static final String DEBILIDAD = "Debilidad";
-
     private final boolean DETALLES = Config.detalles;
 
     @Override
@@ -142,7 +138,7 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
 
         if (valor > 0) {
             if (contador == 0){
-                iTooltip.add(Component.literal(" ").append(Component.literal(ATAQUE).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00)))));
+                iTooltip.add(Component.literal(" ").append(Component.translatable("wrs.tooltip.damage").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00)))));
             }
             if (contador % 3 == 0) {
                 contador++;
@@ -176,7 +172,7 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
 
         if (valor > 0) {
             if (contador == 0){
-                iTooltip.add(Component.literal(" ").append(Component.literal(ATAQUE).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00)))));
+                iTooltip.add(Component.literal(" ").append(Component.translatable("wrs.tooltip.damage").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00)))));
             }
             if (contador % 3 == 0) {
                 contador++;
@@ -206,7 +202,7 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
 
             if (valor > 0) {
                 if(contador == 0){
-                    iTooltip.add(Component.literal(RESISTENCIA).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
+                    iTooltip.add(Component.translatable("wrs.tooltip.resist").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
                 }
                 if (contador % 3 == 0) {
                     contador++;
@@ -240,7 +236,7 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
 
         if (valor > 0) {
             if(contador == 0){
-                iTooltip.add(Component.literal(RESISTENCIA).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
+                iTooltip.add(Component.translatable("wrs.tooltip.resist").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
             }
             if (contador % 3 == 0) {
                 contador++;
@@ -270,7 +266,7 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
 
         if (valor < 0) {
             if(contador == 0){
-                iTooltip.add(Component.literal(DEBILIDAD).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
+                iTooltip.add(Component.translatable("wrs.tooltip.weak").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
             }
             if (contador % 3 == 0) {
                 contador++;
@@ -304,7 +300,7 @@ public enum WRSEntityComponentProvider implements IEntityComponentProvider, ISer
 
         if (valor < 0) {
             if(contador == 0){
-                iTooltip.add(Component.literal(DEBILIDAD).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
+                iTooltip.add(Component.translatable("wrs.tooltip.weak").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x00FF00))));
             }
             if (contador % 3 == 0) {
                 contador++;
